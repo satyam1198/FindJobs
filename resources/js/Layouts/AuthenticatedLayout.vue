@@ -26,8 +26,8 @@ const showingNavigationDropdown = ref(false);
                                 >
                                     Jobs
                                 </NavLink>
-                            </div>
-                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            </div>                            
+                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex" v-if="$page.props.auth.user.role === 'admin'">
                                 <NavLink
                                     :href="route('create-job')"
                                     :active="route().current('create-job')"

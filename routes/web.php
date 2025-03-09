@@ -16,13 +16,9 @@ Route::get('/', function () {
     ]);
 });
 
+
 Route::get('/dashboard', [JobPostController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/jobs/{id}', [JobPostController::class, 'show'])->middleware(['auth', 'verified'])->name('jobs.show');
-Route::get('/create-job', function () {
-    return Inertia::render('CreateJob');
-})->middleware(['auth', 'verified'])->name('create-job');
-
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -33,5 +29,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/my-applications', [ApplicationController::class, 'index'])->name('applications.index');
 });
 
+Route::middleware('role:admin')->group(function () {    
+    Route::get('/create-job', function () {
+        return Inertia::render('CreateJob');
+    })->middleware(['auth', 'verified'])->name('create-job');
+
+});
 
 require __DIR__.'/auth.php';
